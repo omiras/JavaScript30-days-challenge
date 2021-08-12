@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
@@ -21,10 +23,15 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
-
     /*
       misc styles, nothing to do with CSS variables
     */
+
+    :root {
+      --border-image: #ffc600;
+      --blur: 10px;
+      --spacing: 10px;
+    }
 
     body {
       text-align: center;
@@ -42,10 +49,40 @@
     input {
       width: 100px;
     }
+
+    img {
+      border: var(--spacing) var(--border-image);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--border-image);
+    }
   </style>
 
   <script>
+    var r = document.querySelector(':root');
+
+    base.addEventListener('input', function (e) {
+      console.log('changed color: ' + e.target.value);
+      var color = e.target.value;
+      r.style.setProperty('--border-image', color);
+    });
+
+    document.querySelector('#blur').addEventListener('input', function (e) {
+      console.log('changed blur: ' + e.target.value);
+      var blur = e.target.value;
+      r.style.setProperty('--blur', blur + e.target.dataset.sizing);
+    });
+
+    document.querySelector('#spacing').addEventListener('input', function (e) {
+      console.log('changed spacing: ' + e.target.value);
+      var spacing = e.target.value;
+      r.style.setProperty('--spacing', spacing + e.target.dataset.sizing);
+    });
+
   </script>
 
 </body>
+
 </html>
